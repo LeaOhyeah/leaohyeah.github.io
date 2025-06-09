@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoList</title>
+  </head>
+  <body>
+    <form name="todoForm">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <label for="todo">Todo:</label>
+            </td>
+            <td>
+              <input type="text" name="todo" id="todo" />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <input type="submit" value="Add" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <h1>TodoList</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <label for="search">Filter:</label>
+          </th>
+          <th>
+            <input type="text" name="search" id="search" />
+          </th>
+        </tr>
+      </thead>
+      <tbody id="tdBody">
+        <!-- <tr>
+          <td>
+            <input type="button" value="Done" />
+          </td>
+          <td>Todo Desc</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </body>
+  <script>
+    const todolist = [];
+
+    // clear all list before new display
+    function clearTodoList() {
+      const tdBody = document.getElementById("tdBody");
+
+      while (tdBody.firstChild) {
+        tdBody.removeChild(tdBody.firstChild);
+      }
+    }
+
+    // clear display, display new array
+    function displayTodolist() {
+      clearTodoList();
+      for (let index = 0; index < todolist.length; index++) {
+        const todo = todolist[index];
+
+        const tr = document.createElement("tr");
+
+        const tdButton = document.createElement("td");
+        tr.appendChild(tdButton);
+
+        const buttonDone = document.createElement("input");
+        buttonDone.type = "button";
+        buttonDone.value = "Done";
+        tdButton.appendChild(buttonDone);
+
+        const tdTodo = document.createElement("td");
+        tdTodo.textContent = todo;
+        tr.appendChild(tdTodo);
+
+      
+        const tdBody = document.getElementById("tdBody");
+        tdBody.appendChild(tr);
+      }
+    }
+
+    // add to array
+    document.forms["todoForm"].onsubmit = function (event) {
+      event.preventDefault();
+      const todo = document.forms["todoForm"]["todo"].value;
+      todolist.push(todo);
+      document.forms["todoForm"].reset();
+      console.info(todolist);
+      displayTodolist();
+    };
+  </script>
+</html>
