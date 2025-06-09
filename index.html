@@ -76,12 +76,12 @@
 
         const searchText = document.getElementById("search").value.toLowerCase();
         if (todo.toLowerCase().includes(searchText)) {
-          addTodolist(todo);
+          addTodolist(index,todo);
         }
       }
     }
 
-    function addTodolist(todo) {
+    function addTodolist(index, todo) {
       const tr = document.createElement("tr");
 
       const tdButton = document.createElement("td");
