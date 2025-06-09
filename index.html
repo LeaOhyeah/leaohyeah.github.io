@@ -74,26 +74,33 @@
       for (let index = 0; index < todolist.length; index++) {
         const todo = todolist[index];
 
-        const tr = document.createElement("tr");
-
-        const tdButton = document.createElement("td");
-        tr.appendChild(tdButton);
-
-        const buttonDone = document.createElement("input");
-        buttonDone.type = "button";
-        buttonDone.value = "Done";
-        buttonDone.onclick = function () {
-          removeTodoList(index);
-        };
-        tdButton.appendChild(buttonDone);
-
-        const tdTodo = document.createElement("td");
-        tdTodo.textContent = todo;
-        tr.appendChild(tdTodo);
-
-        const tdBody = document.getElementById("tdBody");
-        tdBody.appendChild(tr);
+        const searchText = document.getElementById("search").value.toLowerCase();
+        if (todo.toLowerCase().includes(searchText)) {
+          addTodolist(todo);
+        }
       }
+    }
+
+    function addTodolist(todo) {
+      const tr = document.createElement("tr");
+
+      const tdButton = document.createElement("td");
+      tr.appendChild(tdButton);
+
+      const buttonDone = document.createElement("input");
+      buttonDone.type = "button";
+      buttonDone.value = "Done";
+      buttonDone.onclick = function () {
+        removeTodoList(index);
+      };
+      tdButton.appendChild(buttonDone);
+
+      const tdTodo = document.createElement("td");
+      tdTodo.textContent = todo;
+      tr.appendChild(tdTodo);
+
+      const tdBody = document.getElementById("tdBody");
+      tdBody.appendChild(tr);
     }
 
     // add to array
@@ -103,6 +110,14 @@
       todolist.push(todo);
       document.forms["todoForm"].reset();
       console.info(todolist);
+      displayTodolist();
+    };
+
+    const searchInput = document.getElementById("search");
+    searchInput.onkeyup = function () {
+      displayTodolist();
+    };
+    searchInput.onkeydown = function () {
       displayTodolist();
     };
   </script>
