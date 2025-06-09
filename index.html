@@ -62,6 +62,12 @@
       }
     }
 
+    // remove
+    function removeTodoList(index) {
+      todolist.splice(index, 1);
+      displayTodolist();
+    }
+
     // clear display, display new array
     function displayTodolist() {
       clearTodoList();
@@ -76,13 +82,15 @@
         const buttonDone = document.createElement("input");
         buttonDone.type = "button";
         buttonDone.value = "Done";
+        buttonDone.onclick = function () {
+          removeTodoList(index);
+        };
         tdButton.appendChild(buttonDone);
 
         const tdTodo = document.createElement("td");
         tdTodo.textContent = todo;
         tr.appendChild(tdTodo);
 
-      
         const tdBody = document.getElementById("tdBody");
         tdBody.appendChild(tr);
       }
