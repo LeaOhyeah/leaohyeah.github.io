@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern TodoList</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body
+    class="bg-pink-100 text-slate-800 font-sans flex items-center justify-center min-h-screen"
+  >
+    <div
+      class="bg-white p-6 sm:p-8 rounded-xl shadow-pink-400 shadow-2xl w-full max-w-lg mx-4 border-4 border-pink-200"
+    >
+      <!-- Form to Add Todo -->
+      <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-slate-900">
+        Lorem, ipsum dolor.
+      </h1>
+      <form name="todoForm" class="flex flex-col sm:flex-row gap-3 mb-6">
+        <input
+          type="text"
+          name="todo"
+          id="todo"
+          class="flex-grow w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
+          placeholder="What needs to be done?"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition duration-200 shadow hover:scale-105"
+        >
+          Add
+        </button>
+      </form>
+
+      <!-- Filter and Todo List -->
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            class="flex-grow w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
+            placeholder="Search tasks..."
+          />
+          <button
+            id="resetButton"
+            class="text-pink-500 border border-pink-300 px-4 py-2 rounded-lg font-semibold hover:scale-105 hidden"
+          >
+            Reset
+          </button>
+        </div>
+
+        <ul id="todoListBody" class="space-y-3">
+          <!-- Todo items will be injected here by JavaScript -->
+          <li id="emptyState" class="text-center text-slate-500 py-4 hidden">
+            No tasks found. Try a different filter or add a new task!
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // The main array to hold our todo items
+      const todolist = ["dummy"];
+
+      const todoForm = document.forms["todoForm"];
+      const searchInput = document.getElementById("search");
+      const todoListBody = document.getElementById("todoListBody");
+      const emptyState = document.getElementById("emptyState");
+      const resetButton = document.getElementById("resetButton");
+
+      /**
+       * Triggers a confetti celebration.
+       */
+      function celebrate() {
+        confetti({
+          particleCount: 150,
+          spread: 90,
+          origin: { y: 0.6 },
+          colors: ["#ec4899", "#f472b6", "#f9a8d4", "#ffffff"],
+        });
+      }
+
+      /**
+       * Clears all visible todo items from the list.
+       */
+      function clearTodoList() {
+        while (todoListBody.firstChild) {
+          todoListBody.removeChild(todoListBody.firstChild);
+        }
+      }
+
+      /**
+       * Removes a todo item from the array at a specific index and redraws the list.
+       * @param {number} index - The index of the item to remove.
+       */
+      function removeTodoList(index) {
+        // Remove 1 item at the specified index
+        todolist.splice(index, 1);
+        if (todolist.length === 0) {
+          celebrate();
+        }
+        // Refresh the display
+        displayTodoList();
+      }
+
+      /**
+       * Clears and redraws the entire todo list based on the current
+       * todolist array and the filter text.
+       */
+      function displayTodoList() {
+        clearTodoList();
+        const filterText = searchInput.value.toLowerCase();
+        let itemsDisplayed = 0;
+
+        // Loop through each item in the main todolist array
+        for (let index = 0; index < todolist.length; index++) {
+          const todoText = todolist[index];
+
+          // If the item matches the filter, create and display it
+          if (todoText.toLowerCase().includes(filterText)) {
+            itemsDisplayed++;
+
+            // Create list item
+            const li = document.createElement("li");
+            li.className =
+              "flex items-center justify-between bg-slate-50 p-3 rounded-lg shadow-sm transition-transform duration-200 hover:scale-105";
+
+            // Create text span
+            const span = document.createElement("span");
+            span.textContent = todoText;
+            span.className = "flex-grow";
+            li.appendChild(span);
+
+            // Create "Done" button
+            const buttonDone = document.createElement("button");
+            buttonDone.textContent = "Done";
+            buttonDone.className =
+              "ml-4 bg-pink-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-1 transition";
+
+            // CRITICAL FIX: The onclick event is created here, inside the loop.
+            // This way, it correctly captures the 'index' for each specific item.
+            buttonDone.onclick = function () {
+              removeTodoList(index);
+            };
+            li.appendChild(buttonDone);
+
+            // Add the fully created item to the list
+            todoListBody.appendChild(li);
+          }
+        }
+
+        // Show or hide the "empty state" message
+        if (itemsDisplayed === 0) {
+          emptyState.classList.remove("hidden");
+          todoListBody.appendChild(emptyState);
+        }
+      }
+
+      // Event listener for adding a new todo item
+      todoForm.onsubmit = function (event) {
+        event.preventDefault();
+        const todoInput = todoForm["todo"];
+        const newTodo = todoInput.value.trim();
+
+        if (newTodo) {
+          todolist.push(newTodo);
+          todoForm.reset();
+          console.log("Current Todolist:", todolist);
+          displayTodoList();
+          todoInput.focus(); // Keep focus on input for quick adding
+        }
+      };
+
+      // Event listener for the filter input
+      searchInput.onkeyup = function () {
+        displayTodoList();
+      };
+
+      // Initial display when the page loads
+      displayTodoList();
+
+      // --- NEW: RESET BUTTON LOGIC ---
+      // Event listener for the filter input to show/hide the reset button
+      searchInput.onkeyup = function () {
+        displayTodoList();
+        if (searchInput.value.trim().length > 0) {
+          resetButton.classList.remove("hidden");
+        } else {
+          resetButton.classList.add("hidden");
+        }
+      };
+
+      // Event listener for the reset button itself
+      resetButton.onclick = function () {
+        searchInput.value = ""; // Clear the input
+        resetButton.classList.add("hidden"); // Hide the button
+        displayTodoList(); // Refresh the list
+        searchInput.focus(); // Put focus back on the search bar
+      };
+    </script>
+  </body>
+</html>
