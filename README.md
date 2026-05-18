@@ -1,6 +1,6 @@
-Nanti kamu baru lulus kuliah, baru pertama kali ngerasain kerja di kantor, jangan kaget ya.. jangan sampai watak mu berubah. Kantor pertama mu dinikmati aja, jangan sombong, jangan nyakitin orang, jangan zina. Pokoknya kamu harus sadar diri, ini pengalaman pertama mu kerja di kantor IT kan, biasanya cuma di kelas kuliah, ikut UKM, nongkrong, gibah dll.
+Asy-Syafi, Yang Maha Menyembuhkan. Bahwa kesembuhan hanya datang dari Allah. Apabila aku mati karena penyakit ini, maka ini kasih sayang Tuhan, apabila aku sembuh dari penyakit ini, maka ini kasih sayang Tuhan. 
 
-Semangat buat yang baru terjun di kantor pertamanya, lulusan baru kaget berubah sifat karena pertama kali kerja kantoran.
+Nanti kamu baru lulus kuliah, baru pertama kali ngerasain kerja di kantor, jangan kaget ya.. jangan sampai watak mu berubah. Kantor pertama mu dinikmati aja, jangan sombong, jangan nyakitin orang, jangan zina. Pokoknya kamu harus sadar diri, ini pengalaman pertama mu kerja IT di kantor kan, biasanya cuma di kelas kuliah, ikut UKM, nongkrong, gibah dll.
 
 Zaman: Akhir 2025, awal 2026. Transisi anak papi mami pertama kali kerja langsung berubah sifat.
 
